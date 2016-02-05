@@ -16,6 +16,7 @@
 		CE31DBE31C64479D00F73C01 /* ReactiveCocoaLearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBE21C64479D00F73C01 /* ReactiveCocoaLearningTests.swift */; };
 		CE31DBEE1C64479D00F73C01 /* ReactiveCocoaLearningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBED1C64479D00F73C01 /* ReactiveCocoaLearningUITests.swift */; };
 		CE31DBFC1C6478E600F73C01 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBFB1C6478E600F73C01 /* CustomError.swift */; };
+		CE31DBFE1C648B5C00F73C01 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBFD1C648B5C00F73C01 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		CE31DBED1C64479D00F73C01 /* ReactiveCocoaLearningUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveCocoaLearningUITests.swift; sourceTree = "<group>"; };
 		CE31DBEF1C64479D00F73C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE31DBFB1C6478E600F73C01 /* CustomError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		CE31DBFD1C648B5C00F73C01 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		F06F202249B046CD34E4CF3D /* Pods-ReactiveCocoaLearning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaLearning.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaLearning/Pods-ReactiveCocoaLearning.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +127,7 @@
 			children = (
 				CE31DBCD1C64479D00F73C01 /* AppDelegate.swift */,
 				CE31DBCF1C64479D00F73C01 /* ViewController.swift */,
+				CE31DBFD1C648B5C00F73C01 /* TestViewController.swift */,
 				CE31DBFB1C6478E600F73C01 /* CustomError.swift */,
 				CE31DBD11C64479D00F73C01 /* Main.storyboard */,
 				CE31DBD41C64479D00F73C01 /* Assets.xcassets */,
@@ -336,6 +339,7 @@
 			files = (
 				CE31DBD01C64479D00F73C01 /* ViewController.swift in Sources */,
 				CE31DBCE1C64479D00F73C01 /* AppDelegate.swift in Sources */,
+				CE31DBFE1C648B5C00F73C01 /* TestViewController.swift in Sources */,
 				CE31DBFC1C6478E600F73C01 /* CustomError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

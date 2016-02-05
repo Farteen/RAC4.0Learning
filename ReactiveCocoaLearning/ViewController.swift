@@ -14,6 +14,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let signal = Signal<String, NoError>.pipe()
+        
+        
 ////////////////////-----------Signal----------////////////////////
         ///和原生的reduce,使用了curry function,tailing closure,implicit parameters,单行省略return的语法
         

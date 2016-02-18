@@ -14,10 +14,11 @@ class TestViewController: UIViewController {
     @IBOutlet weak var tfInput: UITextField!
     
     override func viewDidLoad() {
-        let signal = Signal { subscriber -> Disposable? in
-            subscriber.sendNext("hahah")
-            return SimpleDisposable()
-        }
+        
+//        let signal = Signal { subscriber -> Disposable? in
+//            subscriber.sendNext("hahah")
+//            return SimpleDisposable()
+//        }
 //        let inputSignal = tfInput.rac_textSignal().toSignalProducer().map { (input) -> AnyObject? in
 //            return input as? String
 //        }

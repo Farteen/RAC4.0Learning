@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //scan Example
+        //Skip Example
         let (signal, observer) = Signal<Int, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         

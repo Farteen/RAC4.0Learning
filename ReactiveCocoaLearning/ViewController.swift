@@ -8,40 +8,37 @@
 
 import UIKit
 import ReactiveCocoa
+import Result
 
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///skipUntil Example
-        let (signal, observer) = Signal<String, NoError>.pipe()
-        let (signal2, observer2) = Signal<(), NoError>.pipe()
-        let skipUntilSignal = signal.skipUntil(signal2)
+        ///timeoutWithError Example
+        let (signal, observer) = Signal<Int, NSError>.pipe()
+        let (signal2, observer2) = Signal<Int, NSError>.pipe()
         
-        skipUntilSignal.observeNext { (string) -> () in
-            print("\(NSDate()) skipUntilSignal \(string)")
+        let timeoutWithErrorSignal = signal.timeoutWithError(NSError(domain: "domain 123", code: 1000, userInfo: nil), afterInterval: 10, onScheduler: QueueScheduler.mainQueueScheduler)
+        
+        timeoutWithErrorSignal.observeNext { (next) -> () in
+            print("next \(next)")
         }
-        
-        signal2.observeNext { () -> () in
-            print("Observer2 has send Next")
+        timeoutWithErrorSignal.observeFailed { (error) -> () in
+            print(error)
         }
-        
-        dispatch_after(DISPATCH_TIME_NOW, dispatch_get_global_queue(0, 0)) { () -> Void in
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 2), action: { () -> () in
-                observer.sendNext("timer 22222")
-            })
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 4), action: { () -> () in
-                observer.sendNext("timer 44444")
-            })
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 6), action: { () -> () in
-                observer.sendNext("timer 66666")
-            })
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 5), action: { () -> () in
-                observer2.sendNext(())
-            })
+        timeoutWithErrorSignal.observeCompleted { () -> () in
             
         }
+        
+        observer.sendNext(1)
+        observer.sendNext(2)
+        observer.sendNext(3)
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(10.1 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+            observer.sendCompleted()
+        }
+        
+        
         
       }
     

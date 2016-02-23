@@ -14,34 +14,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///skipUntil Example
-        let (signal, observer) = Signal<String, NoError>.pipe()
-        let (signal2, observer2) = Signal<(), NoError>.pipe()
-        let skipUntilSignal = signal.skipUntil(signal2)
+        ///zipWith Example
+        let (signal, observer) = Signal<Int, NoError>.pipe()
+        let (signal2, observer2) = Signal<Int, NoError>.pipe()
         
-        skipUntilSignal.observeNext { (string) -> () in
-            print("\(NSDate()) skipUntilSignal \(string)")
+        let zippedSignal = signal.zipWith(signal2)
+        zippedSignal.observeNext { (left, right) -> () in
+            print("\(left),\(right)")
         }
         
-        signal2.observeNext { () -> () in
-            print("Observer2 has send Next")
-        }
-        
-        dispatch_after(DISPATCH_TIME_NOW, dispatch_get_global_queue(0, 0)) { () -> Void in
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 2), action: { () -> () in
-                observer.sendNext("timer 22222")
-            })
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 4), action: { () -> () in
-                observer.sendNext("timer 44444")
-            })
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 6), action: { () -> () in
-                observer.sendNext("timer 66666")
-            })
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 5), action: { () -> () in
-                observer2.sendNext(())
-            })
-            
-        }
+        observer.sendNext(1)
+        observer.sendNext(2)
+        observer.sendNext(3)
+        observer2.sendNext(9)
+        observer2.sendNext(8)
+        ///如果个数不对等会出现什么情况
+//        observer2.sendNext(7)
+
         
       }
     

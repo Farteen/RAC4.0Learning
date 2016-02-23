@@ -15,14 +15,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///promoteErrors Example
+        ///sampleOn Example
         let (signal, observer) = Signal<Int, NoError>.pipe()
-        let (signal2, observer2) = Signal<Int, NSError>.pipe()
+        let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let promoteErrors = signal.promoteErrors(NSError)
+        let sampleOnSignal = signal.sampleOn(signal2)
         
-        let zippedSignal = promoteErrors.zipWith(signal2)
+        observer2.sendNext(())
         
+        sampleOnSignal.observeNext { (next) -> () in
+            print("<><><><> \(next)")
+        }
+        
+        observer.sendNext(1)
+        observer.sendNext(2)
+//        observer2.sendNext(())
+//        observer2.sendNext(())
         
         
       }

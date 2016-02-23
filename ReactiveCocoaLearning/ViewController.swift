@@ -15,18 +15,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///skip Example
+        ///delay Example
         let (signal, observer) = Signal<String, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let skipSignal = signal.skip(2)
-        skipSignal.observeNext { (next) -> () in
-            print(next)
+        let delaySignal = signal.delay(2, onScheduler: QueueScheduler.mainQueueScheduler)
+        delaySignal.observeNext { (next) -> () in
+            print("\(NSDate()) \(next)")
         }
-        
-        observer.sendNext("12")
-        observer.sendNext("3")
-        observer.sendNext("4")
+        print("\(NSDate())")
+        observer.sendNext("123")
         
       }
     

@@ -18,25 +18,18 @@ class ViewController: UIViewController {
         let (signal, observer) = Signal<Int, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let scannedSignal = signal.scan(1) { (initial, next) -> Int in
-            return initial * next
+        let skipRepeats = signal.skipRepeats()
+        skipRepeats.observeNext { (next) -> () in
+            print("<><><><>\(next)")
         }
         
-        scannedSignal.observeNext { (result) -> () in
-            print(">>>>>>>\(result)")
-        }
-        
-        scannedSignal.observeNext { (result) -> () in
-            print("<<<<<<<<\(result)")
-        }
-        
+        observer.sendNext(1)
+        observer.sendNext(1)
         observer.sendNext(2)
+        observer.sendNext(1)
         observer.sendNext(2)
-        observer.sendNext(2)
-        ///对比reduce,sendCompleted()是否能够省略
-//        observer.sendCompleted()
-        
-        
+        observer.sendNext(1)
+        observer.sendNext(1)
         
     }
     

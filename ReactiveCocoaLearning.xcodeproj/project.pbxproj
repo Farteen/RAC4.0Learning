@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		847D68F98E915D2353EDFB26 /* Pods_ReactiveCocoaLearning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C4368B3737129B9398E1A9 /* Pods_ReactiveCocoaLearning.framework */; };
-		CE26DC8D1C71874300A43BCA /* Test2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE26DC8C1C71874300A43BCA /* Test2ViewController.m */; };
 		CE31DBCE1C64479D00F73C01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBCD1C64479D00F73C01 /* AppDelegate.swift */; };
 		CE31DBD01C64479D00F73C01 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBCF1C64479D00F73C01 /* ViewController.swift */; };
 		CE31DBD31C64479D00F73C01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE31DBD11C64479D00F73C01 /* Main.storyboard */; };
@@ -18,6 +17,7 @@
 		CE31DBEE1C64479D00F73C01 /* ReactiveCocoaLearningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBED1C64479D00F73C01 /* ReactiveCocoaLearningUITests.swift */; };
 		CE31DBFC1C6478E600F73C01 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBFB1C6478E600F73C01 /* CustomError.swift */; };
 		CE31DBFE1C648B5C00F73C01 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE31DBFD1C648B5C00F73C01 /* TestViewController.swift */; };
+		CEAA020D1C7C532B00C73B62 /* TestRAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAA020C1C7C532B00C73B62 /* TestRAC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +41,6 @@
 		01C4368B3737129B9398E1A9 /* Pods_ReactiveCocoaLearning.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactiveCocoaLearning.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81815F95A72B2F54CA61730E /* Pods-ReactiveCocoaLearning.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaLearning.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaLearning/Pods-ReactiveCocoaLearning.release.xcconfig"; sourceTree = "<group>"; };
 		CE26DC8A1C71874300A43BCA /* ReactiveCocoaLearning-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ReactiveCocoaLearning-Bridging-Header.h"; sourceTree = "<group>"; };
-		CE26DC8B1C71874300A43BCA /* Test2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test2ViewController.h; sourceTree = "<group>"; };
-		CE26DC8C1C71874300A43BCA /* Test2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Test2ViewController.m; sourceTree = "<group>"; };
 		CE31DBCA1C64479D00F73C01 /* ReactiveCocoaLearning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveCocoaLearning.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE31DBCD1C64479D00F73C01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE31DBCF1C64479D00F73C01 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +56,7 @@
 		CE31DBEF1C64479D00F73C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE31DBFB1C6478E600F73C01 /* CustomError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		CE31DBFD1C648B5C00F73C01 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		CEAA020C1C7C532B00C73B62 /* TestRAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRAC.swift; sourceTree = "<group>"; };
 		F06F202249B046CD34E4CF3D /* Pods-ReactiveCocoaLearning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveCocoaLearning.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveCocoaLearning/Pods-ReactiveCocoaLearning.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,8 +132,7 @@
 				CE31DBCF1C64479D00F73C01 /* ViewController.swift */,
 				CE31DBFD1C648B5C00F73C01 /* TestViewController.swift */,
 				CE31DBFB1C6478E600F73C01 /* CustomError.swift */,
-				CE26DC8B1C71874300A43BCA /* Test2ViewController.h */,
-				CE26DC8C1C71874300A43BCA /* Test2ViewController.m */,
+				CEAA020C1C7C532B00C73B62 /* TestRAC.swift */,
 				CE31DBD11C64479D00F73C01 /* Main.storyboard */,
 				CE31DBD41C64479D00F73C01 /* Assets.xcassets */,
 				CE31DBD61C64479D00F73C01 /* LaunchScreen.storyboard */,
@@ -344,10 +342,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE26DC8D1C71874300A43BCA /* Test2ViewController.m in Sources */,
 				CE31DBD01C64479D00F73C01 /* ViewController.swift in Sources */,
 				CE31DBCE1C64479D00F73C01 /* AppDelegate.swift in Sources */,
 				CE31DBFE1C648B5C00F73C01 /* TestViewController.swift in Sources */,
+				CEAA020D1C7C532B00C73B62 /* TestRAC.swift in Sources */,
 				CE31DBFC1C6478E600F73C01 /* CustomError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

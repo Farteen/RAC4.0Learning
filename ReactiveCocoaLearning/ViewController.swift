@@ -8,29 +8,40 @@
 
 import UIKit
 import ReactiveCocoa
+import Result
 
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///zipWith Example
-        let (signal, observer) = Signal<Int, NoError>.pipe()
+        ///attempt Example
+        let (signal, observer) = Signal<Int, NSError>.pipe()
         let (signal2, observer2) = Signal<Int, NoError>.pipe()
         
-        let zippedSignal = signal.zipWith(signal2)
-        zippedSignal.observeNext { (left, right) -> () in
-            print("\(left),\(right)")
+        let attemptedSignal = signal.attempt { (next) -> Result<(), NSError> in
+            switch next {
+            case 1:
+            return Result<(), NSError>.init(error: NSError(domain: "domain1", code: next, userInfo: nil))
+            case 2:
+            return Result<(), NSError>.init(error: NSError(domain: "domain2", code: next, userInfo: nil))
+            default:
+                return Result<(), NSError>.init(error: NSError(domain: "domain_default", code: Int.max, userInfo: nil))
+            }
+
+        }
+
+        attemptedSignal.observeNext { (next) -> () in
+            print("....\(next)")
+        }
+        attemptedSignal.observeFailed { (error) -> () in
+            print(error)
         }
         
         observer.sendNext(1)
         observer.sendNext(2)
         observer.sendNext(3)
-        observer2.sendNext(9)
-        observer2.sendNext(8)
-        ///如果个数不对等会出现什么情况
-//        observer2.sendNext(7)
-
+        
         
       }
     

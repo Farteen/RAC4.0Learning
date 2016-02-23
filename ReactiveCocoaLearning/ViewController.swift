@@ -15,23 +15,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///sampleOn Example
-        let (signal, observer) = Signal<Int, NoError>.pipe()
+        ///materialize Example
+        let (signal, observer) = Signal<String, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let sampleOnSignal = signal.sampleOn(signal2)
-        
-        observer2.sendNext(())
-        
-        sampleOnSignal.observeNext { (next) -> () in
-            print("next sent \(next)")
+        let materialize = signal.materialize()
+        materialize.observeNext { (next) -> () in
+            print(next)
         }
         
-        observer2.sendNext(())
-        observer.sendNext(1)
-        observer.sendNext(2)
-        observer2.sendNext(())
-        
+        observer.sendNext(test)
         
         
       }

@@ -15,23 +15,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///collect Example
+        ///take Example
         let (signal, observer) = Signal<String, NoError>.pipe()
         let (signal2, observer2) = Signal<String, NoError>.pipe()
-        let collectSignal = signal.collect()
-        collectSignal.observeNext { (next) -> () in
+        let takeSignal = signal.take(2)
+        takeSignal.observeNext { (next) -> () in
             print(next)
         }
-        collectSignal.observeCompleted { () -> () in
+        takeSignal.observeCompleted { () -> () in
             
         }
         
         observer.sendNext("1")
         observer.sendNext("2")
         observer.sendNext("3")
-//        observer.sendNext(nil)
+        observer.sendNext("5")
         observer.sendCompleted()
-        
         
       }
     

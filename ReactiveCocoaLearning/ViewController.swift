@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///switchToLatest Example<Private function>
+        ///merge Example<Private function>
         let (signal, observer) = Signal<String, NoError>.pipe()
         let (signal2, observer2) = Signal<String, NoError>.pipe()
         

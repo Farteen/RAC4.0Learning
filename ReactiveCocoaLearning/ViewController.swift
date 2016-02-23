@@ -15,22 +15,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///take Example
-        let (signal, observer) = Signal<String, NoError>.pipe()
+        ///ignoreNil Example//注意Signal<Value,Error>中的Value需要为optional?
+        let (signal, observer) = Signal<String?, NoError>.pipe()
         let (signal2, observer2) = Signal<String, NoError>.pipe()
-        let takeSignal = signal.take(2)
-        takeSignal.observeNext { (next) -> () in
+        let ignoreNilSignal = signal.ignoreNil()
+        ignoreNilSignal.observeNext { (next) -> () in
             print(next)
         }
-        takeSignal.observeCompleted { () -> () in
-            
+        signal.observeNext { (next) -> () in
+            print(next)
         }
-        
+        observer.sendNext(nil)
+        observer.sendNext(nil)
         observer.sendNext("1")
-        observer.sendNext("2")
-        observer.sendNext("3")
-        observer.sendNext("5")
-        observer.sendCompleted()
+        
+        
         
       }
     

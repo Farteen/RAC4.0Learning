@@ -15,17 +15,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///materialize Example
+        ///skip Example
         let (signal, observer) = Signal<String, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let materialize = signal.materialize()
-        materialize.observeNext { (next) -> () in
+        let skipSignal = signal.skip(2)
+        skipSignal.observeNext { (next) -> () in
             print(next)
         }
         
-        observer.sendNext(test)
-        
+        observer.sendNext("12")
+        observer.sendNext("3")
+        observer.sendNext("4")
         
       }
     

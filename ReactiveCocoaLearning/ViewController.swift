@@ -14,20 +14,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Skip Example
+        //SkipWhile Example
         let (signal, observer) = Signal<Int, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let skipRepeats = signal.skipRepeats()
+        let skipRepeats = signal.skipWhile { (next) -> Bool in
+            return next < 3
+        }
         skipRepeats.observeNext { (next) -> () in
             print("<><><><>\(next)")
         }
         
         observer.sendNext(1)
-        observer.sendNext(1)
+        observer.sendNext(2)
+        observer.sendNext(3)
         observer.sendNext(2)
         observer.sendNext(1)
-        observer.sendNext(2)
         observer.sendNext(1)
         observer.sendNext(1)
         

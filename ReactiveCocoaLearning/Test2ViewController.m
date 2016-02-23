@@ -16,6 +16,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIView *testView = ({
+        UIView *v = [[UIView alloc] init];
+        v;
+    });
     // Do any additional setup after loading the view.
 }
 

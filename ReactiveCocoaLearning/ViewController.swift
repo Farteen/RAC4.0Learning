@@ -15,19 +15,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///combineLatestWith Example
+        ///observeWithStates<Private Function> Example
         let (signal, observer) = Signal<String, NoError>.pipe()
         let (signal2, observer2) = Signal<String, NoError>.pipe()
         
-        let combineLatestWithSignal = signal.combineLatestWith(signal2)
-        combineLatestWithSignal.observeNext { (next1, next2) -> () in
-            print((next1, next2))
-        }
         
-        observer.sendNext("1")
-        observer.sendNext("2")
-        observer2.sendNext("9")
-        observer2.sendNext("8")
         
       }
     

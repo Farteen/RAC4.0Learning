@@ -15,16 +15,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///delay Example
+        ///combineLatestWith Example
         let (signal, observer) = Signal<String, NoError>.pipe()
-        let (signal2, observer2) = Signal<(), NoError>.pipe()
+        let (signal2, observer2) = Signal<String, NoError>.pipe()
         
-        let delaySignal = signal.delay(2, onScheduler: QueueScheduler.mainQueueScheduler)
-        delaySignal.observeNext { (next) -> () in
-            print("\(NSDate()) \(next)")
+        let combineLatestWithSignal = signal.combineLatestWith(signal2)
+        combineLatestWithSignal.observeNext { (next1, next2) -> () in
+            print((next1, next2))
         }
-        print("\(NSDate())")
-        observer.sendNext("123")
+        
+        observer.sendNext("1")
+        observer.sendNext("2")
+        observer2.sendNext("9")
+        observer2.sendNext("8")
         
       }
     

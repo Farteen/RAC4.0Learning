@@ -14,22 +14,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //scan Example
+        //skipRepeat with condition Example
         let (signal, observer) = Signal<Int, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let skipRepeats = signal.skipRepeats()
+        let skipRepeats = signal.skipRepeats { (former, next) -> Bool in
+            return former > next
+        }
         skipRepeats.observeNext { (next) -> () in
             print("<><><><>\(next)")
         }
         
         observer.sendNext(1)
-        observer.sendNext(1)
+        observer.sendNext(2)
+        observer.sendNext(3)
         observer.sendNext(2)
         observer.sendNext(1)
-        observer.sendNext(2)
-        observer.sendNext(1)
-        observer.sendNext(1)
+        ///注意这个former的确是former,没有记忆功能.
+//        observer.sendNext(2)
+//        observer.sendNext(4)
         
     }
     

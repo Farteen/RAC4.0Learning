@@ -14,18 +14,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //combinePrevious Example
-        let (signal, observer) = Signal<String, NoError>.pipe()
+        //reduce Example
+        let (signal, observer) = Signal<Int, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let combinePreviousSignal = signal.combinePrevious("Test")
-        
-        combinePreviousSignal.observeNext { (previous, next) -> () in
-            print((previous, next))
+        let reducedSignal = signal.reduce(1) { (number, next) -> Int  in
+            return next * 2 + number
         }
         
-        observer.sendNext("aaaaa")
-        observer.sendNext("bbbbb")
+        reducedSignal.observeNext { (result) -> () in
+            print(">>>>>>>\(result)")
+        }
+        
+        observer.sendNext(1)
+        observer.sendNext(1)
+        observer.sendNext(1)
+        ///如果不发送sendCompleted()会有什么结果
+//        observer.sendCompleted()
         
     }
     

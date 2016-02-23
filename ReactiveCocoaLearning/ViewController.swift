@@ -14,31 +14,28 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //SkipWhile Example
+        //TakeLast Example
         let (signal, observer) = Signal<Int, NoError>.pipe()
         
         let (signalReplacement, observer2) = Signal<Int, NoError>.pipe()
         
-        let takeUntilReplacement = signal.takeUntilReplacement(signalReplacement)
+        let takeLast = signal.takeLast(5)
         
-        takeUntilReplacement.observeNext { (next) -> () in
-            print("??????\(next)")
+        takeLast.observeNext { (next) -> () in
+            print("????? \(next)")
         }
         
         observer.sendNext(1)
-        observer.sendNext(1)
-        observer.sendNext(1)
+        observer.sendNext(2)
+        observer.sendNext(3)
+        observer.sendNext(4)
+        observer.sendNext(5)
+        observer.sendNext(6)
+        observer.sendNext(7)
+        ///注意使用原则,需要sendCompleted()
+//        observer.sendCompleted()
         
-        dispatch_after(DISPATCH_TIME_NOW, dispatch_get_main_queue()) { () -> Void in
-            
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 5), action: { () -> () in
-                observer2.sendNext(2)
-            })
-            
-            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 6), action: { () -> () in
-                observer.sendNext(1)
-            })
-        }
+        
         
     }
     

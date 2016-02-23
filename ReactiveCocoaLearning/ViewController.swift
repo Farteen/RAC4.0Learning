@@ -19,28 +19,22 @@ class ViewController: UIViewController {
         let (signal, observer) = Signal<Int, NSError>.pipe()
         let (signal2, observer2) = Signal<Int, NoError>.pipe()
         
-        let attemptedSignal = signal.attempt { (next) -> Result<(), NSError> in
-            switch next {
-            case 1:
-            return Result<(), NSError>.init(error: NSError(domain: "domain1", code: next, userInfo: nil))
-            case 2:
-            return Result<(), NSError>.init(error: NSError(domain: "domain2", code: next, userInfo: nil))
-            default:
-                return Result<(), NSError>.init(error: NSError(domain: "domain_default", code: Int.max, userInfo: nil))
+        let attemptMapSignal = signal.attemptMap { (next) -> Result<Int, NSError> in
+            if next < 6 {
+                return Result<Int, NSError>.init(next)
             }
-
+            return Result<Int, NSError>.init(error: NSError(domain: "domain", code: next, userInfo: nil))
         }
-
-        attemptedSignal.observeNext { (next) -> () in
-            print("....\(next)")
+        
+        attemptMapSignal.observeNext { (next) -> () in
+            print(next)
         }
-        attemptedSignal.observeFailed { (error) -> () in
+        attemptMapSignal.observeFailed { (error) -> () in
             print(error)
         }
         
-        observer.sendNext(1)
-        observer.sendNext(2)
-        observer.sendNext(3)
+        observer.sendNext(5)
+        observer.sendNext(6)
         
         
       }

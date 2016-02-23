@@ -16,22 +16,29 @@ class ViewController: UIViewController {
         
         //SkipWhile Example
         let (signal, observer) = Signal<Int, NoError>.pipe()
-        let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let skipRepeats = signal.skipWhile { (next) -> Bool in
-            return next < 3
-        }
-        skipRepeats.observeNext { (next) -> () in
-            print("<><><><>\(next)")
+        let (signalReplacement, observer2) = Signal<Int, NoError>.pipe()
+        
+        let takeUntilReplacement = signal.takeUntilReplacement(signalReplacement)
+        
+        takeUntilReplacement.observeNext { (next) -> () in
+            print("??????\(next)")
         }
         
         observer.sendNext(1)
-        observer.sendNext(2)
-        observer.sendNext(3)
-        observer.sendNext(2)
         observer.sendNext(1)
         observer.sendNext(1)
-        observer.sendNext(1)
+        
+        dispatch_after(DISPATCH_TIME_NOW, dispatch_get_main_queue()) { () -> Void in
+            
+            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 5), action: { () -> () in
+                observer2.sendNext(2)
+            })
+            
+            QueueScheduler.mainQueueScheduler.scheduleAfter(NSDate(timeIntervalSinceNow: 6), action: { () -> () in
+                observer.sendNext(1)
+            })
+        }
         
     }
     

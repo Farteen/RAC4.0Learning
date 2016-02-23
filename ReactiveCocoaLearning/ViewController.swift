@@ -14,23 +14,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //reduce Example
+        //scan Example
         let (signal, observer) = Signal<Int, NoError>.pipe()
         let (signal2, observer2) = Signal<(), NoError>.pipe()
         
-        let reducedSignal = signal.reduce(1) { (number, next) -> Int  in
-            return next * 2 + number
+        let scannedSignal = signal.scan(1) { (initial, next) -> Int in
+            return initial * next
         }
         
-        reducedSignal.observeNext { (result) -> () in
+        scannedSignal.observeNext { (result) -> () in
             print(">>>>>>>\(result)")
         }
         
-        observer.sendNext(1)
-        observer.sendNext(1)
-        observer.sendNext(1)
-        ///如果不发送sendCompleted()会有什么结果
+        scannedSignal.observeNext { (result) -> () in
+            print("<<<<<<<<\(result)")
+        }
+        
+        observer.sendNext(2)
+        observer.sendNext(2)
+        observer.sendNext(2)
+        ///对比reduce,sendCompleted()是否能够省略
 //        observer.sendCompleted()
+        
+        
         
     }
     

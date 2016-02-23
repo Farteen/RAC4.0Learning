@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///attempt Example
+        ///attemptMap Example
         let (signal, observer) = Signal<Int, NSError>.pipe()
         let (signal2, observer2) = Signal<Int, NoError>.pipe()
         

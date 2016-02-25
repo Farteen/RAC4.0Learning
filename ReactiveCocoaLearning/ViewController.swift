@@ -9,6 +9,7 @@
 import UIKit
 import ReactiveCocoa
 import Result
+import Alamofire
 
 //From https://gist.github.com/natecook1000/b0285b518576b22c4dc8
 extension NSTimer {
@@ -59,29 +60,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///Transforming Event Stream Example
-//        let (producerA, lettersObserver) = SignalProducer<String, NoError>.buffer(3)
-//        let (producerB, numbersObserver) = SignalProducer<String, NoError>.buffer(3)
-//        
-//        let (signal, observer) = SignalProducer<SignalProducer<String, NoError>, NoError>.buffer(3)
-//        
-//        signal.flatten(.Merge).startWithNext { (next) -> () in
-//            print(next)
+        ///Alamofire Request 
+        
+//        let signal = Signal<Response<AnyObject, NSError>, NSError> { observer -> Disposable! in
+//            let request = Alamofire.request(.GET, "http://g1.163.com/madrs?", parameters: ["app":"7A16FBB6","platform":"ios","category":"FOCUS2","location":"1,2,20,21,22,23,24,25,26,27,28,29,30,31","timestamp":"1456384852","gadflag":"1","uid":"EZ3bZWDXmKdsK4nvCc35nybFCaa+g1RkH5VJZwpkgarbd+IbdtzyYgCr1r9zJ6j/E+wkv79bYbHP/2QJFMugyqmETb+p9wTk+KbL3pX32n6rXQ9xC+tmj1nDvjmKDNIvVu1neUAGVMA87Ecl/FgGKdmHFwy+E8oSeS8NV+0Wxci7IZcTIe9oZiPO0eEqwl8X8U30jXDKz7UTprWoZkmbIcog7KdA48n3i9QFx1Zn7RHKBhSGEq8t6ma5ta3dRGrMoXc/43aiMacDs+EsFIPBAD3LMBM5ucIwIbiexIevs6eUXO9YJKSIlB6APvSyyhjCL/MD09BnpLxJz4Y++Atk60FSgxQvap0j7apuQ1Bbf2I="], encoding: ParameterEncoding.URLEncodedInURL, headers: nil)
+//            request.responseJSON(completionHandler: { (response) -> Void in
+//                
+//                observer.sendNext(response)
+//                observer.sendCompleted()
+//            })
+//            
+//            return SimpleDisposable()
 //        }
 //        
-//        observer.sendNext(producerA)
-//        observer.sendNext(producerB)
-//        observer.sendCompleted()
-//        
-//        lettersObserver.sendNext("a")
-//        numbersObserver.sendNext("1")
-//        lettersObserver.sendNext("b")
-//        numbersObserver.sendNext("2")
-//        numbersObserver.sendNext("3")
-//        lettersObserver.sendNext("c")
-//        numbersObserver.sendNext("4")
-//        lettersObserver.sendNext("d")
-//        numbersObserver.sendNext("5")        
+//        signal.observeNext { (response) -> () in
+//            print(signal)
+//        }
         
 
         
@@ -91,6 +85,51 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction func buttonAction(sender: AnyObject) {
+        
+        
+        let signalProducer = SignalProducer<AnyObject, NSError> { observer, disposal in
+            
+            let request = Alamofire.request(.GET, "http://api.aixifan.com/channels/allChannels", parameters: nil, encoding:.URL, headers: ["deviceType":"5"])
+            request.responseJSON(completionHandler: { (response) -> Void in
+                
+                if let data = response.result.value {
+                    observer.sendNext(data)
+                    observer.sendCompleted()
+                } else {
+                    observer.sendFailed(NSError(domain: "errorhappened", code: 10000, userInfo: nil))
+                    disposal.addDisposable({ () -> () in
+                        request.cancel()
+                    })
+                }
+                
+            })
+            
+        }
+        
+//        signalProducer.startWithNext { (response) -> () in
+//            print("something happened")
+//            print(response)
+//        }
+//        signalProducer.startWithFailed { (error) -> () in
+//            print(error)
+//        }
+        
+        let onSignalProducer = signalProducer.on(started: { () -> () in
+            
+            }, event: { (event) -> () in
+                print(event)
+            }, failed: { (error) -> () in
+                
+            }, completed: { () -> () in
+                
+            }) { (next) -> () in
+                print(next)
+        }
+        onSignalProducer.start()
+    }
+    
     
     
 }

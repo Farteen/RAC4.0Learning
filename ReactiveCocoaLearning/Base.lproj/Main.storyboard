@@ -25,11 +25,20 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOb-2p-0Ph">
+                                <rect key="frame" x="277" y="285" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="buttonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OYv-AR-7ca"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ApH-hR-6ot" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="53" id="29A-0c-rPt"/>
+                            <constraint firstItem="JOb-2p-0Ph" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="7IH-hv-d4r"/>
                             <constraint firstAttribute="trailing" secondItem="ApH-hR-6ot" secondAttribute="trailing" constant="20" id="9ha-j0-GNV"/>
+                            <constraint firstItem="JOb-2p-0Ph" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KV7-fu-QLa"/>
                             <constraint firstItem="ApH-hR-6ot" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="iQN-Vt-DEf"/>
                         </constraints>
                     </view>

@@ -60,18 +60,28 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         ///Transforming Event Stream Example
-        let (signal, observer) = Signal<String, NoError>.pipe()
-        signal
-            .map { (next) -> String in
-            return next.uppercaseString
-        }
-            .observeNext { (next) -> () in
-                print(next)
-        }
-        
-        observer.sendNext("a")
-        observer.sendNext("c")
-        observer.sendNext("f")
+//        let (producerA, lettersObserver) = SignalProducer<String, NoError>.buffer(3)
+//        let (producerB, numbersObserver) = SignalProducer<String, NoError>.buffer(3)
+//        
+//        let (signal, observer) = SignalProducer<SignalProducer<String, NoError>, NoError>.buffer(3)
+//        
+//        signal.flatten(.Merge).startWithNext { (next) -> () in
+//            print(next)
+//        }
+//        
+//        observer.sendNext(producerA)
+//        observer.sendNext(producerB)
+//        observer.sendCompleted()
+//        
+//        lettersObserver.sendNext("a")
+//        numbersObserver.sendNext("1")
+//        lettersObserver.sendNext("b")
+//        numbersObserver.sendNext("2")
+//        numbersObserver.sendNext("3")
+//        lettersObserver.sendNext("c")
+//        numbersObserver.sendNext("4")
+//        lettersObserver.sendNext("d")
+//        numbersObserver.sendNext("5")        
         
 
         

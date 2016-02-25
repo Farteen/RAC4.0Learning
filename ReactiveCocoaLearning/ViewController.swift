@@ -18,7 +18,29 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         /// Example
+        let (signal, observer) = Signal<Int, NSError>.pipe()
+        signal.observe { (event) -> () in
+            switch event {
+            case let .Next(next):
+                print("next ----    \(next)")
+            case let .Failed(error):
+                print("error \(error)")
+            default:
+                print(event)
+            }
+        }
         
+        signal.observeNext { (next) -> () in
+            print("next \(next)")
+        }
+        signal.observeFailed { (error) -> () in
+            print("error \(error)")
+        }
+        
+        observer.sendNext(1)
+        observer.sendNext(2)
+        observer.sendFailed(NSError(domain: "com.apple.com", code: 1000, userInfo: nil))
+        observer.sendCompleted()
         
       }
     

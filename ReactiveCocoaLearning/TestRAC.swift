@@ -12,9 +12,3 @@ import ReactiveCocoa
 class TestRAC: NSObject {
     
 }
-
-func createSignal() -> Signal<String, NoError> {
-    var count = 0
-    return Signal()
-    
-}

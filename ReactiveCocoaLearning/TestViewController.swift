@@ -14,7 +14,9 @@ class TestViewController: UIViewController {
     @IBOutlet weak var tfInput: UITextField!
     
     override func viewDidLoad() {
-        
+        tfInput.rac_textSignal().toSignalProducer().startWithNext { (text) -> () in
+            
+        }
     }
     
 }

@@ -12,13 +12,12 @@ import Result
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var tfInput: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///TestProject Example
-        
-        
-        
+        /// Example
         
         
       }

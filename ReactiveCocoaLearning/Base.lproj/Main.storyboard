@@ -33,6 +33,9 @@
                             <constraint firstItem="ApH-hR-6ot" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="iQN-Vt-DEf"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tfInput" destination="ApH-hR-6ot" id="eSA-7m-wfo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

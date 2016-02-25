@@ -49,7 +49,7 @@ extension NSTimer {
 }
 
 class ViewController: UIViewController {
-    
+    var tag = 0
     @IBOutlet weak var tfInput: UITextField!
     
     func timerAction(timer: NSTimer) {
@@ -86,19 +86,26 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func buttonAction(sender: AnyObject) {
-        
-        
+    func generateSignalProducer(shouldDelay: Bool) -> SignalProducer<AnyObject, NSError> {
         let signalProducer = SignalProducer<AnyObject, NSError> { observer, disposal in
             
             let request = Alamofire.request(.GET, "http://api.aixifan.com/channels/allChannels", parameters: nil, encoding:.URL, headers: ["deviceType":"5"])
+            
             request.responseJSON(completionHandler: { (response) -> Void in
                 
                 if let data = response.result.value {
-                    observer.sendNext(data)
-                    observer.sendCompleted()
+                    let delay = shouldDelay ? 5.0 : 0.0
+                    print("did receive \(NSDate())--------------------")
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
+                        print("will send next \(NSDate())--------------------")
+                        observer.sendNext(data)
+                        observer.sendCompleted()
+                    }
+
                 } else {
-                    observer.sendFailed(NSError(domain: "errorhappened", code: 10000, userInfo: nil))
+                    let error = NSError(domain: "errorhappened", code: 10000, userInfo: nil)
+                    print("\(error) + occurred")
+                    observer.sendFailed(error)
                     disposal.addDisposable({ () -> () in
                         request.cancel()
                     })
@@ -107,29 +114,38 @@ class ViewController: UIViewController {
             })
             
         }
+        return signalProducer
+    }
+    
+    @IBAction func buttonAction(sender: AnyObject) {
         
-//        signalProducer.startWithNext { (response) -> () in
-//            print("something happened")
-//            print(response)
-//        }
-//        signalProducer.startWithFailed { (error) -> () in
-//            print(error)
-//        }
         
-        let onSignalProducer = signalProducer.on(started: { () -> () in
+        let signalProducer  = self.generateSignalProducer(false)
+        let signalProducer2 = self.generateSignalProducer(true)
+        
+        let zippedProducer = signalProducer.zipWith(signalProducer2)
+        
+        let onZipped = zippedProducer.on(started: { () -> () in
             
             }, event: { (event) -> () in
                 print(event)
             }, failed: { (error) -> () in
-                
+                print(error)
             }, completed: { () -> () in
                 
-            }) { (next) -> () in
-                print(next)
+            }, interrupted: { () -> () in
+                
+            }, terminated: { () -> () in
+                
+            }, disposed: { () -> () in
+                
+            }) { (next, next2) -> () in
+                print("tag \(self.tag) zipped \(NSDate())--------------------")
         }
-        onSignalProducer.start()
+        onZipped.start()
+        
+        
     }
-    
     
     
 }

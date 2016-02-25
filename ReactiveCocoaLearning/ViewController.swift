@@ -59,38 +59,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ///InjectingEffects Example
-        let signalProducer = SignalProducer<Int, NoError> { observer, disposal in
-            NSTimer.schedule(repeatInterval: 2.0, handler: { (timer) -> Void in
-                observer.sendNext(123)
-            })
+        ///Transforming Event Stream Example
+        let (signal, observer) = Signal<String, NoError>.pipe()
+        signal
+            .map { (next) -> String in
+            return next.uppercaseString
+        }
+            .observeNext { (next) -> () in
+                print(next)
         }
         
-        signalProducer.startWithNext { (next) -> () in
-            print(next)
-        }
+        observer.sendNext("a")
+        observer.sendNext("c")
+        observer.sendNext("f")
         
-//        let resultSignalProducer = signalProducer.on(started: { () -> () in
-//                print("started")
-//            }, event: { (event) -> () in
-//                
-//                print("event")
-//            }, failed: { (error) -> () in
-//                print("failed")
-//            }, completed: { () -> () in
-//                print("completed")
-//            }, interrupted: { () -> () in
-//                print("interupted")
-//            }, terminated: { () -> () in
-//                print("terminated")
-//            }, disposed: { () -> () in
-//                print("disposed")
-//            }) { (next) -> () in
-//                
-//                print("happpend \(next)")
-//        }
-//        
-//        cansendObserver.sendNext(123123)
+
         
       }
     

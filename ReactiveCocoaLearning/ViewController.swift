@@ -48,10 +48,22 @@ extension NSTimer {
     }
 }
 
+func textSignal(textField: UITextField) -> SignalProducer<String, NoError> {
+    return textField.rac_textSignal().toSignalProducer()
+        .map { $0! as! String }
+        .flatMapError {_ in SignalProducer(value: "") }
+}
+
 class ViewController: UIViewController {
     var tag = 0
+    var inputText: String! = ""
+    
+    let inputTextSignal = MutableProperty("")
+    
     @IBOutlet weak var tfInput: UITextField!
     @IBOutlet weak var btnButton: UIButton!
+    
+    
     
     func timerAction(timer: NSTimer) {
         let observer = timer.userInfo as! Observer<Int, NoError>
@@ -67,6 +79,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+            
+        let textSignalProducer = textSignal(self.tfInput)
+        
+        inputTextSignal <~ textSignalProducer
+        
+        inputTextSignal.producer.on(started: { () -> () in
+            
+            }, event: { (event) -> () in
+                print("....\(event)")
+            }, failed: { _ -> () in
+                
+            }, completed: { () -> () in
+                
+            }, interrupted: { () -> () in
+                
+            }, terminated: { () -> () in
+                
+            }, disposed: { () -> () in
+                
+            }) { (next) -> () in
+//                print(".......\(next)")
+        }.start()
+        
+        return
         let action = Action<Void, Void, NoError>(enabledIf: MutableProperty(true)) { () -> SignalProducer<Void, NoError> in
             let producer = SignalProducer<Void, NoError> { observer, disposal in
                 print("will send next")

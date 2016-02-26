@@ -51,14 +51,60 @@ extension NSTimer {
 class ViewController: UIViewController {
     var tag = 0
     @IBOutlet weak var tfInput: UITextField!
+    @IBOutlet weak var btnButton: UIButton!
     
     func timerAction(timer: NSTimer) {
         let observer = timer.userInfo as! Observer<Int, NoError>
         observer.sendNext(123)
     }
     
+    func testButtonAction(button: UIButton) {
+        
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let action = Action<Void, Void, NoError>(enabledIf: MutableProperty(true)) { () -> SignalProducer<Void, NoError> in
+            let producer = SignalProducer<Void, NoError> { observer, disposal in
+                print("will send next")
+                observer.sendNext()
+            }
+            return producer
+        }
+        
+        let cocoaAction = CocoaAction(action) { _ -> Void in
+            print("cocoa action")
+            return ()
+        }
+        
+        self.btnButton.addTarget(cocoaAction, action: CocoaAction.selector, forControlEvents: .TouchUpInside)
+        
+        
+//        let testEvent = Event<Int, NoError>.Next(1)
+//        
+//        let buttonSelector = "buttonAction:"
+        let (signal, observer) = Signal<Int, NoError>.pipe()
+        signal.observeNext { (next) -> () in
+            print("11111 \(next)")
+        }
+        
+        signal.observeNext { (next) -> () in
+            print("22222 \(next)");
+        }
+        
+        observer.sendNext(1)
+        observer.sendNext(2)
+        observer.sendNext(3)
+        
+        
+//        let button = UIButton(type: .Custom)
+//        button.addTarget(self, action: "testButtonAction:", forControlEvents: .TouchUpInside)
+//        self.view.addSubview(button)
+
+        
         
         ///Alamofire Request 
         

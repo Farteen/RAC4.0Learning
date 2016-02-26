@@ -43,6 +43,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnButton" destination="JOb-2p-0Ph" id="nnT-YK-L84"/>
                         <outlet property="tfInput" destination="ApH-hR-6ot" id="eSA-7m-wfo"/>
                     </connections>
                 </viewController>
